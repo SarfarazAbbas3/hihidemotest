@@ -243,17 +243,23 @@ var KB = [
   { q:['order','how to order','place order','get started','start work','آرڈر','كيف','ordering'],
     a:'📦 **How to Order:**\n\n1. Send your design file (WhatsApp/Email)\n2. Mention placement, size & fabric type\n3. We confirm price and turnaround\n4. You approve → we digitize\n5. File delivered within **2–6 hours** ✅\n\n📱 **WhatsApp: +92 345 2669812**\n📧 **hihidigitizing@gmail.com**' },
 
+  // Identity / who are you
+  { q:['tm kon ho','tum kon ho','ap kon ho','who are you','what are you','aap kon','kon ho','tumhara naam','your name','what is your name','kaun ho','کون ہو','تم کون','آپ کون','من أنت','who r u','ur name','whats ur name'],
+    a:'🤖 Main **Hihi Digitizing AI** hoon!\n\nMain Hihi Digitizing Services ka AI assistant hoon jo aapke har sawal ka jawab deta hai — digitizing, pricing, services, formats, aur kuch bhi!\n\n🏢 **Hihi Digitizing Services**\n📍 Majeed Colony Landhi, Karachi\n📱 WhatsApp: **+92 345 2669812**\n\nKya poochna chahte hain?' },
+
   // Greeting
-  { q:['hi','hello','hey','salam','salaam','assalam','hy','helo','مرحبا','ہیلو','السلام','خوش آمدید'],
-    a:'👋 **Assalamu Alaikum! Welcome to Hihi Digitizing Services!**\n\nWe have **11 years of professional embroidery digitizing experience**.\n\nAsk me anything — pricing, services, formats, turnaround, or any other question!\n\n📱 WhatsApp: **+92 345 2669812**' },
+  { q:['hi','hello','hey','salam','salaam','assalam','hy','helo','مرحبا','ہیلو','السلام','خوش آمدید','aoa','aoa!','good morning','good evening','good afternoon','subah','shaam'],
+    a:'👋 **Assalamu Alaikum! Welcome to Hihi Digitizing Services!**\n\nHum **11 saal** se professional embroidery digitizing kar rahe hain!\n\nKuch bhi poochho — pricing, services, formats, turnaround, ya koi aur sawal!\n\n📱 WhatsApp: **+92 345 2669812**' },
 ];
 
 // System prompt for Claude API
-var SYS='You are a helpful AI assistant for Hihi Digitizing Services — a professional embroidery digitizing company with 11 years of experience.\n\n'
+var SYS='You are Hihi Digitizing AI — the official AI assistant for Hihi Digitizing Services, a professional embroidery digitizing company with 11 years of experience based in Karachi, Pakistan.\n\n'
 +'CRITICAL RULES:\n'
-+'1. Always reply in the EXACT same language the user writes in.\n'
-+'2. Answer EVERY question fully and helpfully.\n'
-+'3. Never refuse to answer anything.\n\n'
++'1. ALWAYS reply in the EXACT same language the user writes in. If they write Urdu reply in Urdu, Arabic in Arabic, English in English. NEVER mix languages.\n'
++'2. Answer EVERY question fully — no matter what it is.\n'
++'3. If someone asks who you are or your name: say you are Hihi Digitizing AI, the assistant for Hihi Digitizing Services.\n'
++'4. Never give a generic list when a specific answer is possible.\n'
++'5. Be conversational and warm — like a helpful human assistant.\n\n'
 +'KEY FACTS:\n'
 +'• 11 years of digitizing experience\n'
 +'• Services: Embroidery Digitizing, Vector Conversion, Patch, Cap, 3D Puff, Applique\n'
@@ -284,12 +290,15 @@ function getLocalAnswer(text){
       }
     }
   }
-  // Detect language for generic fallback
-  var isUrdu=/[\u0600-\u06FF]/.test(text)&&/ہے|کیا|ہیں|کرو|کا|کی/.test(text);
+  // Smart language detection for fallback
+  var isUrdu=/[\u0600-\u06FF]/.test(text)&&/ہے|کیا|ہیں|کرو|کا|کی|ہو|تم|آپ|مجھے|کون|کیسے/.test(text);
   var isArabic=/[\u0600-\u06FF]/.test(text)&&!isUrdu;
-  if(isUrdu) return '😊 آپ کے سوال کا شکریہ!\n\nمیں مدد کر سکتا ہوں:\n💰 قیمت | ⏱ وقت | 📁 فارمیٹ | 🧵 خدمات | 📞 رابطہ\n\n📱 واٹس ایپ: **+92 345 2669812**';
-  if(isArabic) return '😊 شكراً لسؤالك!\n\nيمكنني المساعدة في:\n💰 الأسعار | ⏱ التسليم | 📁 الصيغ | 🧵 الخدمات\n\n📱 واتساب: **+92 345 2669812**';
-  return '😊 Great question! Ask me about:\n\n💰 **Pricing** ($10 cap/chest, $20 jacket back)\n⏱ **Turnaround** (2-6 hours)\n📁 **Formats** (DST, PES, EMB, JEF, VP3...)\n🧵 **Services** (11 years experience!)\n📞 **Contact**: +92 345 2669812';
+  
+  if(isUrdu) return '😊 **Hihi Digitizing AI** yahan hoon!\n\nAapka sawal samajh gaya. Poochh sakte hain:\n\n💰 **Pricing** — Cap/Chest $10, Jacket Back $20\n⏱ **Turnaround** — 2-6 ghante\n📁 **Formats** — DST, PES, EMB, JEF, VP3\n🧵 **Services** — 11 saal ka tajurba\n✅ **Revisions** — Bilkul free!\n\n📱 WhatsApp: **+92 345 2669812**';
+  if(isArabic) return '😊 **هيهي للرقمنة AI** هنا!\n\nيمكنني المساعدة في:\n💰 الأسعار | ⏱ التسليم | 📁 الصيغ | 🧵 الخدمات\n\n📱 واتساب: **+92 345 2669812**';
+  
+  // English / unknown — give helpful response based on what they said
+  return '😊 I\'m **Hihi Digitizing AI** — here to help!\n\nI can answer questions about:\n\n💰 **Pricing** — Cap/Chest $10, Jacket Back $20\n⏱ **Turnaround** — 2 to 6 hours\n📁 **Formats** — DST, PES, EMB, JEF, VP3 & more\n🧵 **Services** — 11 years of experience\n✅ **Revisions** — Always FREE\n🔧 **Quality** — Pull comp, density, clean trims\n\n📱 WhatsApp: **+92 345 2669812**\n\nWhat would you like to know?';
 }
 
 var fab=document.getElementById('hd-fab');
