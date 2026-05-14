@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Login / Register - Hihi Digitizing Services</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="lib/animate/animate.min.css" />
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <style>
+        .auth-wrapper {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            display: flex;
+            align-items: center;
+            padding: 80px 0;
+        }
+        .auth-card {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.12);
+            overflow: hidden;
+        }
+        .auth-left {
+            background: var(--bs-primary);
+            padding: 50px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        .auth-left h2 { color: #fff; font-weight: 700; }
+        .auth-left p { color: rgba(255,255,255,0.85); }
+        .auth-left .feature-item { display: flex; align-items: center; margin-bottom: 15px; text-align: left; }
+        .auth-left .feature-item i { color: var(--bs-warning); font-size: 20px; margin-right: 12px; min-width: 25px; }
+        .auth-right { padding: 50px 40px; }
+        .nav-tabs .nav-link { border: none; color: #666; font-weight: 600; padding: 12px 30px; border-radius: 8px 8px 0 0; }
+        .nav-tabs .nav-link.active { background: var(--bs-primary); color: #fff; }
+        .nav-tabs { border-bottom: 2px solid var(--bs-primary); }
+        .form-control { border-radius: 8px; padding: 12px 15px; border: 1.5px solid #e0e0e0; transition: all 0.3s; }
+        .form-control:focus { border-color: var(--bs-primary); box-shadow: 0 0 0 3px rgba(var(--bs-primary-rgb),0.1); }
+        .input-group-text { border-radius: 8px 0 0 8px; background: #f8f9fa; border: 1.5px solid #e0e0e0; }
+        .btn-auth { border-radius: 8px; padding: 12px; font-weight: 600; letter-spacing: 0.5px; }
+        .divider { display: flex; align-items: center; margin: 20px 0; }
+        .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: #e0e0e0; }
+        .divider span { padding: 0 15px; color: #999; font-size: 14px; }
+        .alert-auth { border-radius: 8px; display: none; }
+        .spinner-sm { width: 18px; height: 18px; }
+    </style>
+    <!-- Fixed Buttons CSS -->
+    <style>
+    /* 1. WhatsApp — very bottom */
+    .float{position:fixed!important;bottom:22px!important;right:26px!important;
+           width:52px!important;height:52px!important;background-color:#25D366!important;
+           color:#fff!important;border-radius:50px!important;text-align:center!important;
+           font-size:26px!important;z-index:9960!important;line-height:52px!important;
+           box-shadow:0 4px 12px rgba(37,211,102,.4)!important;text-decoration:none!important;}
+    .my-float{line-height:52px!important;}
+    /* 2. Scroll-to-top — above chatbot */
+    .back-to-top{position:fixed!important;right:26px!important;bottom:290px!important;
+                 z-index:9965!important;width:38px!important;height:38px!important;
+                 display:flex!important;align-items:center!important;justify-content:center!important;}
+    .back-to-top i{font-size:14px!important;}
+    /* Chatbot FAB is at bottom:80px in chatbot.js */
+    @media(max-width:480px){
+      .float{right:12px!important;bottom:18px!important;}
+      .back-to-top{right:12px!important;bottom:270px!important;}
+    }
+    </style>
+</head>
+<body>
+
+    <!-- Spinner Start -->
+    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-border text-warning" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <!-- Spinner End -->
+
+    <!-- Topbar Start -->
+    <div class="container-fluid topbar bg-light px-5 d-none d-lg-block">
+        <div class="row gx-0 align-items-center">
+            <div class="col-lg-8 text-center text-lg-start mb-2 mb-lg-0">
+                <div class="d-flex flex-wrap">
+                    <a href="#" class="text-muted small me-4"><i class="fas fa-map-marker-alt text-warning me-2"></i>Majeed Colony Landhi Karachi</a>
+                    <a href="https://wa.me/03452669812" target="_blank" class="text-muted small me-4"><i class="fas fa-phone-alt text-warning me-2"></i>+92 345 2669812</a>
+                    <a href="mailto:hihidigitizing@gmail.com" target="_blank" class="text-muted small me-0"><i class="fas fa-envelope text-warning me-2"></i>hihidigitizing@gmail.com</a>
+                </div>
+            </div>
+            <div class="col-lg-4 text-center text-lg-end">
+                <div class="d-inline-flex align-items-center" style="height: 45px;">
+                    <a href="index.html"><small class="me-3 text-dark"><i class="fas fa-home text-warning me-2"></i>Back to Home</small></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Topbar End -->
+
+    <!-- Navbar Start -->
+    <div class="container-fluid position-relative p-0">
+        <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
+            <a href="index.html" class="navbar-brand p-0">
+                <img src="./img/logo png.png" alt="Logo">
+            </a>
+            <button class="navbar-toggler" type="button" style="border:1px solid rgba(0,0,0,0.2);padding:6px 10px;" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span class="fa fa-bars"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <div class="navbar-nav ms-auto py-0">
+                    <a href="index.html" class="nav-item nav-link" data-i18n="nav_home">Home</a>
+                    <a href="about.html" class="nav-item nav-link" data-i18n="nav_about">About</a>
+                    <a href="service.html" class="nav-item nav-link" data-i18n="nav_services">Services</a>
+                    <a href="blog.html" class="nav-item nav-link" data-i18n="nav_portfolio">Portfolio</a>
+                    <a href="contact.html" class="nav-item nav-link" data-i18n="nav_contact">Contact Us</a>
+                </div>
+                <a href="order.html" class="btn btn-primary rounded-pill py-2 px-4 my-3 my-lg-0 flex-shrink-0" data-i18n="nav_order">Place Order</a>
+            </div>
+        </nav>
+    </div>
+    <!-- Navbar End -->
+
+    <!-- Auth Section Start -->
+    <div class="auth-wrapper">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xl-10">
+                    <div class="auth-card">
+                        <div class="row g-0">
+                            <!-- Left Info Panel -->
+                            <div class="col-lg-5 auth-left d-none d-lg-flex">
+                                <div>
+                                    <img src="./img/logo png.png" alt="Logo" class="mb-4" style="max-width:150px; filter:brightness(0) invert(1);">
+                                    <h2 class="mb-3">Welcome to<br>Hihi Digitizing</h2>
+                                    <p class="mb-4">Your trusted digitizing partner. Place orders and get your work done easily.</p>
+                                    <div class="feature-item"><i class="fas fa-check-circle"></i><span class="text-white">Fast Order Processing</span></div>
+                                    <div class="feature-item"><i class="fas fa-check-circle"></i><span class="text-white">Real-time Order Tracking</span></div>
+                                    <div class="feature-item"><i class="fas fa-check-circle"></i><span class="text-white">Secure & Safe Account</span></div>
+                                    <div class="feature-item"><i class="fas fa-check-circle"></i><span class="text-white">24/7 Customer Support</span></div>
+                                </div>
+                            </div>
+
+                            <!-- Right Auth Panel -->
+                            <div class="col-lg-7 auth-right">
+                                <ul class="nav nav-tabs mb-4" id="authTab">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="login-tab" data-bs-toggle="tab" href="#loginTab">
+                                            <i class="bi bi-door-open-fill me-2"></i>Login
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="register-tab" data-bs-toggle="tab" href="#registerTab">
+                                            <i class="fas fa-user-plus me-2"></i>Register
+                                        </a>
+                                    </li>
+                                </ul>
+
+                                <div class="tab-content">
+                                    <!-- LOGIN TAB -->
+                                    <div class="tab-pane fade show active" id="loginTab">
+                                        <h4 class="fw-bold mb-1">Login to Your Account</h4>
+                                        <p class="text-muted small mb-4">Enter your email and password to continue</p>
+                                        <div id="loginAlert" class="alert alert-danger alert-auth"></div>
+                                        <div class="mb-3">
+                                            <label class="form-label fw-semibold">Email Address</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="fas fa-envelope text-warning"></i></span>
+                                                <input type="email" class="form-control" id="loginEmail" placeholder="your@email.com">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label fw-semibold">Password</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="fas fa-lock text-warning"></i></span>
+                                                <input type="password" class="form-control" id="loginPassword" placeholder="Password">
+                                                <button class="btn btn-outline-secondary" type="button" id="toggleLoginPass"><i class="fas fa-eye"></i></button>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-center mb-4">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="rememberMe">
+                                                <label class="form-check-label small" for="rememberMe">Remember me</label>
+                                            </div>
+                                            <a href="#" class="small text-primary" id="forgotPassLink">Forgot Password?</a>
+                                        </div>
+                                        <button class="btn btn-primary btn-auth w-100 mb-3" id="loginBtn">
+                                            <span id="loginBtnText"><i class="bi bi-door-open-fill me-2"></i>Login</span>
+                                            <span id="loginSpinner" class="d-none"><span class="spinner-border spinner-sm"></span> Logging in...</span>
+                                        </button>
+                                        <div class="divider"><span>or</span></div>
+                                        <p class="text-center small text-muted">Don't have an account? <a href="#" class="text-primary fw-semibold" onclick="document.getElementById('register-tab').click()">Register Now</a></p>
+                                    </div>
+
+                                    <!-- REGISTER TAB -->
+                                    <div class="tab-pane fade" id="registerTab">
+                                        <h4 class="fw-bold mb-1">Create New Account</h4>
+                                        <p class="text-muted small mb-4">Fill in your details to create an account</p>
+                                        <div id="registerAlert" class="alert alert-danger alert-auth"></div>
+                                        <div class="row">
+                                            <div class="col-md-6 mb-3">
+                                                <label class="form-label fw-semibold">Full Name</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-text"><i class="fas fa-user text-warning"></i></span>
+                                                    <input type="text" class="form-control" id="regName" placeholder="Your Name">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label class="form-label fw-semibold">Phone Number</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-text"><i class="fas fa-phone text-warning"></i></span>
+                                                    <input type="tel" class="form-control" id="regPhone" placeholder="+92 300 0000000">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label fw-semibold">Email Address</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="fas fa-envelope text-warning"></i></span>
+                                                <input type="email" class="form-control" id="regEmail" placeholder="your@email.com">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label fw-semibold">Password</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="fas fa-lock text-warning"></i></span>
+                                                <input type="password" class="form-control" id="regPassword" placeholder="Minimum 6 characters">
+                                                <button class="btn btn-outline-secondary" type="button" id="toggleRegPass"><i class="fas fa-eye"></i></button>
+                                            </div>
+                                        </div>
+                                        <div class="mb-4">
+                                            <label class="form-label fw-semibold">Confirm Password</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="fas fa-lock text-warning"></i></span>
+                                                <input type="password" class="form-control" id="regConfirmPassword" placeholder="Re-enter your password">
+                                            </div>
+                                        </div>
+                                        <button class="btn btn-primary btn-auth w-100 mb-3" id="registerBtn">
+                                            <span id="regBtnText"><i class="fas fa-user-plus me-2"></i>Create Account</span>
+                                            <span id="regSpinner" class="d-none"><span class="spinner-border spinner-sm"></span> Creating...</span>
+                                        </button>
+                                        <p class="text-center small text-muted">Already have an account? <a href="#" class="text-primary fw-semibold" onclick="document.getElementById('login-tab').click()">Login Now</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Auth Section End -->
+
+    <!-- Footer Start -->
+    <div class="container-fluid footer py-5">
+        <div class="container py-5 border-start-0 border-end-0" style="border: 1px solid; border-color: rgb(255, 255, 255, 0.08);">
+            <div class="row g-5">
+                <div class="col-md-6 col-lg-6 col-xl-4">
+                    <div class="footer-item">
+                        <a href="index.html" class="p-0"><img src="./img/logo png.png" alt="Logo"></a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-xl-2">
+                    <div class="footer-item">
+                        <h4 class="text-white mb-4" data-i18n="footer_quick">Quick Links</h4>
+                        <a href="about.html"><i class="fas fa-angle-right me-2"></i data-i18n="footer_aboutus">About Us</a>
+                        <a href="service.html"><i class="fas fa-angle-right me-2"></i data-i18n="footer_service">Service</a>
+                        <a href="blog.html"><i class="fas fa-angle-right me-2"></i> Portfolio</a>
+                        <a href="contact.html"><i class="fas fa-angle-right me-2"></i data-i18n="footer_contactus">Contact us</a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-xl-3">
+                    <div class="footer-item">
+                        <h4 class="text-white mb-4" data-i18n="footer_support">Support</h4>
+                        <a href="Privacy Policy.html" target="_blank"><i class="fas fa-angle-right me-2"></i> Privacy Policy</a>
+                        <a href="Terms and conditions.html" target="_blank"><i class="fas fa-angle-right me-2"></i> Terms & Conditions</a>
+                        <a href="Refund Policy.html" target="_blank"><i class="fas fa-angle-right me-2"></i> Refund Policy</a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-xl-3">
+                    <div class="footer-item">
+                        <h4 class="text-white mb-4" data-i18n="footer_contact">Contact Info</h4>
+                        <div class="d-flex align-items-center"><i class="fas fa-envelope text-warning me-3"></i><a href="mailto:hihidigitizing@gmail.com" target="_blank"><p class="text-white mb-0">hihidigitizing@gmail.com</p></a></div>
+                        <div class="d-flex align-items-center"><i class="bi bi-telephone text-warning me-3"></i><p class="text-white mb-0">+923452669812</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-primary btn-lg-square rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/wow/wow.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="js/main.js"></script>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+        import { getFirestore, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+        // =============================================
+        // APNA FIREBASE CONFIG YAHAN PASTE KAREN
+        // Firebase Console > Project Settings > Your Apps > SDK Setup
+        // =============================================
+        const firebaseConfig = {
+            apiKey: "AIzaSyDaML2erecJbTinMYNsiIL9kcPvJQoPGw0",
+            authDomain: "hihidigitizingservice.firebaseapp.com",
+            projectId: "hihidigitizingservice",
+            storageBucket: "hihidigitizingservice.firebasestorage.app",
+            messagingSenderId: "198282083511",
+            appId: "1:198282083511:web:dfa26f76731670c1a7e132"
+        };
+        // =============================================
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // Agar already logged in, order page par bhejo
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                const redirect = new URLSearchParams(window.location.search).get('redirect') || 'order.html';
+                window.location.href = redirect;
+            }
+        });
+
+        // Helper: show/hide alert
+        function showAlert(id, msg, type='danger') {
+            const el = document.getElementById(id);
+            el.className = `alert alert-${type} alert-auth`;
+            el.textContent = msg;
+            el.style.display = 'block';
+        }
+
+        // Toggle password visibility
+        document.getElementById('toggleLoginPass').addEventListener('click', () => {
+            const inp = document.getElementById('loginPassword');
+            inp.type = inp.type === 'password' ? 'text' : 'password';
+        });
+        document.getElementById('toggleRegPass').addEventListener('click', () => {
+            const inp = document.getElementById('regPassword');
+            inp.type = inp.type === 'password' ? 'text' : 'password';
+        });
+
+        // LOGIN
+        document.getElementById('loginBtn').addEventListener('click', async () => {
+            const email = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value;
+            if (!email || !password) { showAlert('loginAlert', 'Please enter both email and password.'); return; }
+            document.getElementById('loginBtnText').classList.add('d-none');
+            document.getElementById('loginSpinner').classList.remove('d-none');
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+                window.location.href = 'order.html';
+            } catch (err) {
+                let msg = 'Login fail hua. Invalid email or password.';
+                if (err.code === 'auth/user-not-found') msg = 'This email is not registered.';
+                if (err.code === 'auth/wrong-password') msg = 'Incorrect password.';
+                if (err.code === 'auth/invalid-credential') msg = 'Invalid email or password.';
+                showAlert('loginAlert', msg);
+            }
+            document.getElementById('loginBtnText').classList.remove('d-none');
+            document.getElementById('loginSpinner').classList.add('d-none');
+        });
+
+        // FORGOT PASSWORD
+        document.getElementById('forgotPassLink').addEventListener('click', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value.trim();
+            if (!email) { showAlert('loginAlert', 'Please enter your email in the email field first.'); return; }
+            try {
+                await sendPasswordResetEmail(auth, email);
+                showAlert('loginAlert', 'Password reset email sent. Please check your inbox.', 'success');
+            } catch (err) {
+                showAlert('loginAlert', 'Failed to send reset email. Please check your email address.');
+            }
+        });
+
+        // REGISTER
+        document.getElementById('registerBtn').addEventListener('click', async () => {
+            const name = document.getElementById('regName').value.trim();
+            const phone = document.getElementById('regPhone').value.trim();
+            const email = document.getElementById('regEmail').value.trim();
+            const password = document.getElementById('regPassword').value;
+            const confirm = document.getElementById('regConfirmPassword').value;
+            if (!name || !email || !password || !phone) { showAlert('registerAlert', 'All fields are required.'); return; }
+            if (password !== confirm) { showAlert('registerAlert', 'Passwords do not match.'); return; }
+            if (password.length < 6) { showAlert('registerAlert', 'Password must be at least 6 characters.'); return; }
+            document.getElementById('regBtnText').classList.add('d-none');
+            document.getElementById('regSpinner').classList.remove('d-none');
+            try {
+                const cred = await createUserWithEmailAndPassword(auth, email, password);
+                await setDoc(doc(db, 'users', cred.user.uid), {
+                    name, phone, email, role: 'user',
+                    createdAt: serverTimestamp(),
+                    uid: cred.user.uid
+                });
+                showAlert('registerAlert', 'Account created successfully! Redirecting...', 'success');
+                setTimeout(() => window.location.href = 'order.html', 1500);
+            } catch (err) {
+                let msg = 'Registration failed. Please try again.';
+                if (err.code === 'auth/email-already-in-use') msg = 'This email is already registered.';
+                showAlert('registerAlert', msg);
+            }
+            document.getElementById('regBtnText').classList.remove('d-none');
+            document.getElementById('regSpinner').classList.add('d-none');
+        });
+
+        // Enter key support
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                const activeTab = document.querySelector('.tab-pane.active').id;
+                if (activeTab === 'loginTab') document.getElementById('loginBtn').click();
+                else document.getElementById('registerBtn').click();
+            }
+        });
+    </script>
+
+    <!-- WhatsApp Button -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <a href="https://api.whatsapp.com/send?phone=03452669812" class="float" target="_blank">
+        <i class="fa fa-whatsapp my-float"></i>
+    </a>
+    <script src="js/chatbot.js"></script>
+    <script src="js/lang.js"></script>
+</body>
+</html>
